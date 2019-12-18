@@ -5,13 +5,15 @@
  */
 package controller;
 
+import entity.Person;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.PersonFacade;
 
 /**
  *
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
     "/newPerson"
 })
 public class WebController extends HttpServlet {
-
+@EJB private PersonFacade personFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -60,12 +62,17 @@ public class WebController extends HttpServlet {
                         .forward(request, response);
                 break;
             case "/newPerson":
-                String fristname = request.getParameter("fristname");
+                String firstname = request.getParameter("firstname");
                 String lastname = request.getParameter("lastname");
                 String status = request.getParameter("status");
                 String email = request.getParameter("email");
-                Person person = new Person(fristname, lastname, status, email);
-                
+                Person person = new Person(firstname, lastname, status, email);
+                request.setAttribute("info", "Пользователь " 
+                            +person.getFirstname()+" "+person.getLastname()
+                            +" зарегистрирован.");
+                personFacade.create(person);
+                request.getRequestDispatcher("/index.jsp")
+                        .forward(request, response);
                 break;
             
         }

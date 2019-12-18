@@ -14,7 +14,7 @@
     <body>
         <h1>Регистрация!</h1>
         <form action="newPerson" method="POST">
-            Имя: <input type="text" name="fristname"><br>
+            Имя: <input type="text" name="firstname"><br>
             Фамилия: <input type="text" name="lastname"><br>
             Статус: <input type="text" name="status"><br>
             e-mail: <input type="text" name="email"><br>
